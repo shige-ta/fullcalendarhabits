@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang='ja'>
+  <head>
+    <meta charset='utf-8' />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js"></script>
+    <script>
+         let array1 = {}
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          eventOverlap: false,
+          //   dayMaxEventRows: true, // for all non-TimeGrid views
+        //   dayMaxEventRows: true, // for all non-TimeGrid views
+        //     views: {
+        //         timeGrid: {
+        //         dayMaxEventRows: 1 // adjust to 6 only for timeGridWeek/timeGridDay
+        //         }
+        //  },
+          headerToolbar: {
+                    left: 'title',
+                    center: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek,addEventButton',
+                    right: 'prev,today,next'
+            },
+            // 日本語化
+            locale: 'ja',
+            buttonText: {
+                prev:     '<',
+                next:     '>',
+                prevYear: '<<',
+                nextYear: '>>',
+                today:    '今日',
+                month:    '月',
+                week:     '週',
+                day:      '日',
+                list:     '一覧'
+            },
+            // events: "events.json",
+            //     //タイトルを書き換えます（2019年8月）
+            // titleFormat: function(obj) {
+            // return obj.date.year+"年"+(obj.date.month+1)+"月";
+            // },
+
+            // //曜日のテキストを書き換えます（日〜土）
+            // columnHeaderText: function(obj) {
+            // return days[obj.getDay()];
+            // },
+
+            // //イベントのクリック時の処理を加えます
+            // eventClick: function(obj) {
+            // alert(obj.event.title);
+            // },
+            customButtons: {
+                addEventButton: {
+                    text: '本日の課題クリア',
+                    click: function() {
+                        var date = new Date(); // will be in local time
+                        if(array1[date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()] != 1)
+                        {
+
+                            if (!isNaN(date.valueOf())) { // valid?
+                            calendar.addEvent({
+                            title: 'クリア',
+                            start: date,
+                            allDay: true
+                            });
+                        } else {
+                            alert('Invalid date.');
+                        }
+                        array1[date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()] = 1;
+                        }
+                    }
+                }
+            }
+        });
+        calendar.render();
+      });
+    </script>
+</head>
+  <body>
+    <div id='calendar'></div>
+</body>
+</html>
